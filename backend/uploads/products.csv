@@ -1,0 +1,4 @@
+name,unit,category,brand,stock,status,image
+Product 1,Pieces,Electronics,Brand A,10,In Stock,
+Product 2,Pieces,Clothing,Brand B,5,In Stock,
+Product 3,Pieces,Furniture,Brand C,0,Out of Stock,
