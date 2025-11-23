@@ -1,75 +1,11 @@
-// import React, { useState } from "react";
-// import { importProducts, exportProducts } from "../api";
-
-// export default function Controls({ onSearch, onCategory, refresh }) {
-//   const [search, setSearch] = useState("");
-//   const [importing, setImporting] = useState(false);
-
-//   const handleImport = async (e) => {
-//     const file = e.target.files[0];
-//     if (!file) return;
-
-//     const formData = new FormData();
-//     formData.append("file", file);
-//     setImporting(true);
-
-//     try {
-//       const res = await importProducts(formData);
-//       alert(`Imported: ${res.data.added}, Skipped: ${res.data.skipped}`);
-//       refresh();
-//     } catch (err) {
-//       alert("Import failed");
-//     } finally {
-//       setImporting(false);
-//     }
-//   };
-
-//   return (
-//     <div className="controls-container">
-//       <div className="left">
-//         <input
-//           placeholder="Search products..."
-//           value={search}
-//           onChange={(e) => {
-//             setSearch(e.target.value);
-//             onSearch(e.target.value);
-//           }}
-//         />
-//         <select onChange={(e) => onCategory(e.target.value)}>
-//           <option value="">All Categories</option>
-//           <option value="Electronics">Electronics</option>
-//           <option value="Clothing">Clothing</option>
-//           <option value="Home">Home</option>
-//         </select>
-//       </div>
-
-//       <div className="right">
-//         <label className="btn import-btn">
-//           {importing ? "Uploading..." : "Import CSV"}
-//           <input type="file" accept=".csv" hidden onChange={handleImport} />
-//         </label>
-//         <a
-//           href={exportProducts()}
-//           className="btn export-btn"
-//           target="_blank"
-//           rel="noreferrer"
-//         >
-//           Export CSV
-//         </a>
-//       </div>
-//     </div>
-//   );
-// }
-
 import React, { useState } from "react";
-import { importProducts, exportProducts, createProduct } from "../api"; // Import createProduct
+import { importProducts, createProduct, api } from "../api";
 
 export default function Controls({ onSearch, onCategory, refresh }) {
   const [search, setSearch] = useState("");
   const [importing, setImporting] = useState(false);
-  const [showAddForm, setShowAddForm] = useState(false); // Toggle for form
+  const [showAddForm, setShowAddForm] = useState(false);
 
-  // Form State
   const [newProduct, setNewProduct] = useState({
     name: "",
     category: "Electronics",
@@ -109,16 +45,34 @@ export default function Controls({ onSearch, onCategory, refresh }) {
         brand: "",
         stock: 0,
         unit: "Piece",
-      }); // Reset
-      refresh(); // Reload table
+      });
+      refresh();
     } catch (err) {
       alert("Failed to add product");
     }
   };
 
+  const handleExport = async () => {
+    try {
+      const response = await api.get("/products/export", {
+        responseType: "blob",
+      });
+      const blob = new Blob([response.data], { type: "text/csv" });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "products.csv");
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      alert("Failed to export products CSV");
+    }
+  };
+
   return (
     <div className="controls-container" style={{ flexDirection: "column" }}>
-      {/* TOP ROW: Search & Buttons */}
       <div
         style={{
           display: "flex",
@@ -145,7 +99,6 @@ export default function Controls({ onSearch, onCategory, refresh }) {
         </div>
 
         <div className="right">
-          {/* NEW ADD BUTTON */}
           <button
             className="btn btn-save"
             onClick={() => setShowAddForm(!showAddForm)}
@@ -157,18 +110,12 @@ export default function Controls({ onSearch, onCategory, refresh }) {
             {importing ? "Uploading..." : "Import CSV"}
             <input type="file" accept=".csv" hidden onChange={handleImport} />
           </label>
-          <a
-            href={exportProducts()}
-            className="btn export-btn"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <button className="btn export-btn" onClick={handleExport}>
             Export CSV
-          </a>
+          </button>
         </div>
       </div>
 
-      {/* OPTIONAL: ADD FORM */}
       {showAddForm && (
         <form
           onSubmit={handleAddSubmit}
