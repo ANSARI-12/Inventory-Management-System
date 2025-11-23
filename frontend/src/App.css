@@ -1,0 +1,235 @@
+/* GLOBAL RESET */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f4f4f9;
+  margin: 0;
+  color: #333;
+}
+
+.app-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* HEADER STYLING (Centered Title) */
+.app-header {
+  position: relative;
+  display: flex;
+  justify-content: center; /* Centers the H1 */
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 2rem;
+  color: #2c3e50;
+}
+
+.logout-btn {
+  position: absolute;
+  right: 0; /* Puts button on the far right */
+}
+
+/* ERROR MESSAGE */
+.error-message {
+  padding: 15px;
+  background: #ffebee;
+  color: #c62828;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: 1px solid #ef9a9a;
+}
+
+/* CONTROLS CONTAINER */
+.controls-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.controls-container input,
+.controls-container select {
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+/* BUTTONS */
+.btn {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
+.btn:hover { opacity: 0.9; }
+
+.import-btn { background: #007bff; color: white; }
+.export-btn { background: #28a745; color: white; margin-left: 10px; }
+.btn-save { background: #28a745; color: white; margin-right: 5px; }
+.btn-cancel { background: #6c757d; color: white; }
+.btn-edit { background: #ffc107; margin-right: 5px; color: #333; }
+.btn-del { background: #dc3545; color: white; }
+
+/* TABLE STYLING */
+.main-content {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden; /* Keeps borders rounded */
+}
+
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px; /* Prevents squishing on small screens */
+}
+
+.product-table th,
+.product-table td {
+  padding: 15px 20px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.product-table th {
+  background: #343a40;
+  color: white;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+/* Zebra Striping */
+.product-table tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+.product-table tr:hover {
+  background-color: #e9ecef;
+  cursor: pointer;
+}
+
+/* STATUS BADGES */
+.status-in {
+  background: #d4edda;
+  color: #155724;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.status-out {
+  background: #f8d7da;
+  color: #721c24;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* SIDEBAR */
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 350px;
+  height: 100%;
+  background: white;
+  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+.logs ul {
+  list-style: none;
+  padding: 0;
+}
+
+.logs li {
+  background: #f8f9fa;
+  margin-bottom: 12px;
+  padding: 15px;
+  border-radius: 8px;
+  border-left: 4px solid #007bff;
+  font-size: 0.9rem;
+}
+
+.old-val { text-decoration: line-through; color: #999; margin-right: 5px; }
+.new-val { font-weight: bold; color: #28a745; }
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+  .controls-container {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .product-table th:nth-child(3), .product-table td:nth-child(3), /* Category */
+  .product-table th:nth-child(4), .product-table td:nth-child(4)  /* Brand */
+  {
+    display: none; /* Hide columns on tablet/mobile */
+  }
+  
+  .app-header h1 {
+    font-size: 1.5rem;
+  }
+}
+
+/* LOGIN PAGE */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #eef2f5;
+}
+
+.login-form {
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.login-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.login-form input {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
